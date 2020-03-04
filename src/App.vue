@@ -14,7 +14,6 @@
             <td>{{ level.name }}</td>
             <td> {{ getReaderType(level.readerId)}}</td>
             <td> {{ getReaderName(level.readerId)}}</td>
-
           </tr>
         </table>
 
@@ -71,8 +70,8 @@
       }
     },
     computed:{
-        ...mapGetters(['selected', 'getReader', 'visibleLevels']),
-      isDirty(){
+        ...mapGetters(['selected', 'getReader', 'visibleLevels', 'readerTypes']),
+        isDirty(){
           if(!this.selected){
             return false;
           }
@@ -82,29 +81,22 @@
             return false
           }
           return true;
-      }
+        }
     },
 
     methods:{
-      searchHandler(){
-        debugger;
-      },
       setSelected(id){
         this.$store.commit('selSelected', id);
         this.name = this.selected.name;
         this.Description = this.selected.Description;
         this.readerId = this.selected.readerId;
       },
-      getReaderr(readerId){
-        const found = this.$store.state.readers.find(item => item.id === readerId);
-        return found;
-      },
       getReaderName(readerId){
         return this.getReader(readerId).name;
       },
       getReaderType(readerId){
         const found = this.getReader(readerId);
-        const readerType = this.$store.state.readerTypes.find( item => item.id === found.typeId);
+        const readerType = this.readerTypes.find( item => item.id === found.typeId);
         return readerType.name;
       },
       save(){

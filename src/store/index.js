@@ -145,11 +145,13 @@ export default new Vuex.Store({
         }
         return false;
       })
+    },
+    readerTypes(state){
+      return state.readerTypes;
     }
   },
   mutations: {
     save(state, payload){
-      debugger;
       const selectedId = state.selectedId;
       if(selectedId === null){
         return;
@@ -163,7 +165,6 @@ export default new Vuex.Store({
       state.selectedId = payload;
     },
     setFilter(state, payload){
-      debugger;
       state.filter = payload;
       state.selectedId = null;
     }
