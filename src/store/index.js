@@ -135,12 +135,22 @@ export default new Vuex.Store({
         return state.readers.find(item => item.id === id);
       }
     },
-    visibleLevels(state){
+    visibleLevels(state, getters){
       return state.accessLevels.filter(item => {
         if(!state.filter){
           return true;
         }
-        if(item.name.match(state.filter)){
+        const filter = new RegExp(state.filter, "i")
+        if(item.name.match(filter)){
+          return true;
+        }
+        const reader = getters.getReader(item.readerId);
+          if(reader.name.match(filter)){
+              return true;
+          }
+
+        const readerType = getters.readerTypes.find( item => item.id === reader.typeId);
+        if( readerType.name.match(filter)){
           return true;
         }
         return false;
